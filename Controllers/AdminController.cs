@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using LeaderboardServer.Services;
 using LeaderboardServer.DTO;
+using LeaderboardServer.Entities;
 
 
 namespace LeaderboardServer.Controllers;
@@ -17,26 +18,50 @@ public class AdminController : ControllerBase
     }
 
     [HttpPost("users")]
-    public ActionResult<List<MemberDTO>> AddUser()
+    public async Task<ActionResult> AddMember([FromBody] MemberDTO request)
     {
-        return null;
+        int result = await _leaderboardService.AddMember(request.Username);
+
+        if(result == 1)
+            return Conflict("Member already exists.");
+
+        return Ok("Member successfully added to tracking list.");
     }
 
     [HttpPost("katas")]
-    public ActionResult<List<MemberDTO>> AddKata()
+    public async Task<ActionResult> AddKata([FromBody] KataDTO request)
     {
-        return null;
+        int result = await _leaderboardService.AddKata(request.KataRemoteId,
+                                                        request.KataName,
+                                                        request.KataUrl,
+                                                        request.PointDifficulty);
+
+        if(result == 1)
+            return Conflict("Kata already exists.");
+
+        return Ok("Kata successfully added to tracking list.");
     }
 
-    [HttpDelete("usertrack")]
-    public ActionResult<List<MemberDTO>> DeleteUser()
+    [HttpDelete("users/{request}")]
+    public async Task<ActionResult> DeleteMember(string request)
     {
-        return null;
+        int result = await _leaderboardService.DelMember(request);
+
+        if(result == 1)
+            return NotFound("User not found.");
+
+        return Ok("User successfully deleted.");
+
     }
     
-    [HttpDelete("katatrack")]
-    public ActionResult<List<MemberDTO>> DeleteKata()
+    [HttpDelete("katas/{request}")]
+    public async Task<ActionResult> DeleteKata(string request)
     {
-        return null;
+        int result = await _leaderboardService.DelKata(request);
+
+        if(result == 1)
+            return NotFound("Kata not found.");
+
+        return Ok("Kata successfully deleted.");
     }
 }

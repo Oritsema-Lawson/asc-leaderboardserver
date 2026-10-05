@@ -1,15 +1,20 @@
+using System.Drawing;
 using LeaderboardServer.Entities;
 
 namespace LeaderboardServer.DTO;
 
 public class KataDTO
 {
-    public string KataName { get; set;}
-    public string KataUrl { get; set; }
+    public string KataRemoteId { get; set; } = string.Empty;
+    public string KataName { get; set; } = string.Empty;
+    public string KataUrl { get; set; } = string.Empty;
+    public int PointDifficulty { get; set; }
 
-    public KataDTO(string name, string url)
+    public KataDTO(string kataRemoteID, string kataName, string kataUrl, int pointDifficulty)
     {
-        KataName = name;
-        KataUrl = url;
+        KataRemoteId = kataRemoteID;
+        KataName = kataName;
+        KataUrl = kataUrl;
+        PointDifficulty = pointDifficulty;
     }
 }

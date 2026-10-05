@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LeaderboardServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fe286e644265095aa7682d079bdd843aa90b065")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f430f25b96112e0078182dd509456b2cdd697f0a")]
 [assembly: System.Reflection.AssemblyProductAttribute("LeaderboardServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LeaderboardServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

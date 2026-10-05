@@ -17,16 +17,17 @@ public class MainController : ControllerBase
     }
 
     [HttpGet("leaderboard")]
-    public ActionResult<List<MemberDTO>> GetLeaderboard()
+    public async Task<ActionResult<List<MemberDTO>>> GetLeaderboard()
     {
         var result = _leaderboardService.GetTop(20);
-        return Ok(result);
+        return Ok(await result);
     }
 
     [HttpGet("katas")]
-    public ActionResult<List<KataDTO>> GetKatas()
+    public async Task<ActionResult<List<KataDTO>>> GetKatas()
     {
-        return _leaderboardService.GetKatas();
+        var result = _leaderboardService.GetKatas();
+        return Ok(await result);
     }
     
 }

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace LeaderboardServer.Entities;
 
-public class Member
+public class Member : AuditableEntity
 {
     [Key]
     public int Id { get; set; }
