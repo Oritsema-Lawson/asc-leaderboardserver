@@ -1,4 +1,5 @@
-using LeaderboardServer;
+using LeaderboardServer.Data;
+using LeaderboardServer.Services;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -14,4 +15,6 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
     db.Database.ExecuteSqlRaw("PRAGMA journal_mode=WAL;");
 }
+
+builder.Services.AddScoped<ILeaderboardService, LeaderboardService>();
 
