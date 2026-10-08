@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-namespace LeaderboardServer.Entities;
+namespace APCServer.Entities;
 
 public class Member : AuditableEntity
 {
@@ -8,7 +8,7 @@ public class Member : AuditableEntity
 
     [Required]
     [MaxLength(100)]
-    public string Username {get; set; } = string.Empty;
+    public string Username { get; set; } = string.Empty;
     public int TotalPoints { get; set; }
 }
 

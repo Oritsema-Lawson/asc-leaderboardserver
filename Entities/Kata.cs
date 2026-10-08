@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-namespace LeaderboardServer.Entities;
+namespace APCServer.Entities;
 
 public class Kata : AuditableEntity
 {

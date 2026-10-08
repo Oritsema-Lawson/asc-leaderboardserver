@@ -1,7 +1,7 @@
 using System.Drawing;
-using LeaderboardServer.Entities;
+using APCServer.Entities;
 
-namespace LeaderboardServer.DTO;
+namespace APCServer.DTO;
 
 public class KataDTO
 {

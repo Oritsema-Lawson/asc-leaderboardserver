@@ -1,24 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
-using LeaderboardServer.Services;
-using LeaderboardServer.DTO;
+using APCServer.Services;
+using APCServer.DTO;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 
-namespace LeaderboardServer.Controllers;
+namespace APCServer.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class MainController : ControllerBase
 {
-    private ILeaderboardService _leaderboardService;
+    private readonly ILeaderboardService _leaderboardService;
+    private readonly ILogger<MainController> _logger;
 
-    public MainController(ILeaderboardService lbService)
+    public MainController(ILeaderboardService lbService, ILogger<MainController> logger)
     {
         _leaderboardService = lbService;
+        _logger = logger;
     }
 
     [HttpGet("leaderboard")]
     public async Task<ActionResult<List<MemberDTO>>> GetLeaderboard()
     {
+        _logger.LogInformation("Sending leaderboard.");
         var result = _leaderboardService.GetTop(20);
         return Ok(await result);
     }
@@ -28,6 +33,5 @@ public class MainController : ControllerBase
     {
         var result = _leaderboardService.GetKatas();
         return Ok(await result);
-    }
-    
+    }   
 }

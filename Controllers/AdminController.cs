@@ -1,25 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
-using LeaderboardServer.Services;
-using LeaderboardServer.DTO;
-using LeaderboardServer.Entities;
+using APCServer.Services;
+using APCServer.DTO;
+using APCServer.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 
-namespace LeaderboardServer.Controllers;
+namespace APCServer.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles = "Admin")]
 public class AdminController : ControllerBase
 {
-    private ILeaderboardService _leaderboardService;
+    private readonly ILeaderboardService _leaderboardService;
+    private readonly ILogger<AdminController> _logger;
 
-    public AdminController(ILeaderboardService lbService)
+    public AdminController(ILeaderboardService lbService, ILogger<AdminController> logger)
     {
         _leaderboardService = lbService;
+        _logger = logger;
     }
 
-    [HttpPost("users")]
+    [HttpPost("members")]
     public async Task<ActionResult> AddMember([FromBody] MemberDTO request)
     {
+        _logger.LogInformation("Adding member {memberUsername} to tracking list.", request.Username);
         int result = await _leaderboardService.AddMember(request.Username);
 
         if(result == 1)
@@ -42,7 +47,7 @@ public class AdminController : ControllerBase
         return Ok("Kata successfully added to tracking list.");
     }
 
-    [HttpDelete("users/{request}")]
+    [HttpDelete("members/{request}")]
     public async Task<ActionResult> DeleteMember(string request)
     {
         int result = await _leaderboardService.DelMember(request);

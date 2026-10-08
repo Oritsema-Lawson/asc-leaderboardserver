@@ -71,6 +71,26 @@ namespace LeaderboardServer.Migrations
                     table.PrimaryKey("PK_TrackedMember", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserAuth",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserEmail = table.Column<string>(type: "TEXT", nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
+                    PermissionLevel = table.Column<string>(type: "TEXT", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    LastModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "TEXT", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAuth", x => x.Id);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CompletionLog_MemberId_KataId",
                 table: "CompletionLog",
@@ -89,6 +109,9 @@ namespace LeaderboardServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "TrackedMember");
+
+            migrationBuilder.DropTable(
+                name: "UserAuth");
         }
     }
 }

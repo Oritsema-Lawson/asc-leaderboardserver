@@ -1,4 +1,4 @@
-namespace LeaderboardServer.DTO;
+namespace APCServer.DTO;
 
 public class MemberDTO {
     public string Username { get; } = String.Empty;
@@ -10,3 +10,5 @@ public class MemberDTO {
         Points = points;
     }
 }
+
+// Purely GAY HOMOSEXUAL GAY GAY

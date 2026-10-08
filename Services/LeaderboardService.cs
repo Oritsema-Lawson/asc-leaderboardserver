@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using LeaderboardServer.DTO;
-using LeaderboardServer.Data;
-using LeaderboardServer.Entities;
+using APCServer.DTO;
+using APCServer.Data;
+using APCServer.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace LeaderboardServer.Services;
+namespace APCServer.Services;
 
 public interface ILeaderboardService
 {
@@ -20,9 +20,9 @@ public interface ILeaderboardService
 
 public class LeaderboardService : ILeaderboardService
 {
-    private readonly LeaderboardContext _context;
+    private readonly ApcDbContext _context;
 
-    public LeaderboardService(LeaderboardContext context)
+    public LeaderboardService(ApcDbContext context)
     {
         _context = context;
     }

@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using LeaderboardServer.Entities;
+using APCServer.Entities;
 
-namespace LeaderboardServer.Data;
+namespace APCServer.Data;
 
-public class LeaderboardContext : DbContext
+public class ApcDbContext : DbContext
 {
     public DbSet<Kata> TrackedKata => Set<Kata>();
     public DbSet<Member> TrackedMember => Set<Member>();
+    public DbSet<User> UserAuth => Set<User>();
     public DbSet<CompletionLogEntry> CompletionLog => Set<CompletionLogEntry>();
 
-    public LeaderboardContext(DbContextOptions<LeaderboardContext> options) : base(options) {}
+    public ApcDbContext(DbContextOptions<ApcDbContext> options) : base(options) {}
     
     protected override void OnModelCreating(ModelBuilder modelBuilder) 
         { 
@@ -18,6 +19,7 @@ public class LeaderboardContext : DbContext
             modelBuilder.Entity<Kata>().HasQueryFilter(x => x.DeletedAt == null);
             modelBuilder.Entity<Member>().HasQueryFilter(x => x.DeletedAt == null);
             modelBuilder.Entity<CompletionLogEntry>().HasQueryFilter(x => x.DeletedAt == null);
+            modelBuilder.Entity<User>().HasQueryFilter(x => x.DeletedAt == null);
         }
 
     public override async Task<int> SaveChangesAsync(CancellationToken token = default)
