@@ -9,7 +9,7 @@ namespace APCServer.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "ADMIN")]
 public class AdminController : ControllerBase
 {
     private readonly ILeaderboardService _leaderboardService;

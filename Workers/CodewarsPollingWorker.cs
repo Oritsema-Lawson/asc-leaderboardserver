@@ -18,7 +18,7 @@ public class CodewarsPollingWorker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken cancel)
     {
-        PeriodicTimer fullCooldown = new PeriodicTimer(TimeSpan.FromMinutes(30));
+        PeriodicTimer fullCooldown = new PeriodicTimer(TimeSpan.FromSeconds(10));
 
         while(!cancel.IsCancellationRequested)
         {

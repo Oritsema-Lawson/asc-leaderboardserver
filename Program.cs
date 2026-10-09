@@ -6,13 +6,14 @@ using APCServer.Services;
 using APCServer.Workers;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 try
 {
     Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Console()
-                .WriteTo.File($"{DateTime.Now}.txt")
+                .WriteTo.File($"Log/{DateTime.Now}.txt")
                 .CreateLogger();
 
     WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -21,15 +22,16 @@ try
                                             => x.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
     builder.Services.AddScoped<ILeaderboardService, LeaderboardService>();
+    builder.Services.AddScoped<ILoginService, LoginService>();
     builder.Services.AddTransient<IHashService, Argon2HashService>();
     builder.Services.AddSerilog();
     builder.Services.AddHttpClient<CodewarsClient>(x => x.BaseAddress = new Uri("https://www.codewars.com/api/v1/"));
     builder.Services.AddHostedService<CodewarsPollingWorker>();
-    builder.Services.AddAuthentication("Cookies").AddCookie(x => {   
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x => {   
         x.Cookie.Name = "APCAuth";
         x.Cookie.HttpOnly = true;
         x.Cookie.SameSite = SameSiteMode.Strict;
-        x.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        x.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
 
         x.Events.OnRedirectToLogin = y =>
         {

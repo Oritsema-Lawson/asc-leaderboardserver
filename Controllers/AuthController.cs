@@ -39,6 +39,17 @@ public class AuthController : ControllerBase
         return Ok();
     }
 
+    [HttpPost("register")]
+    public async Task<ActionResult> Register([FromBody] UserAuthDTO request)
+    {
+        var result = await _loginService.RegisterAsync(request.UserEmail, request.Password);
+        
+        if(result == LoginResult.UserExists)
+            return Conflict();
+
+        return Ok();
+    }
+
 
     [HttpPost("logout")]
     public async Task<ActionResult> LogOut()
