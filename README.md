@@ -60,12 +60,13 @@ Revokes the current session cookie.
 
 #### `POST /api/Admin/members`
 
-Adds a new Codewars member to the tracking database.
+Adds a new Codewars member to the tracking database (will most likely remove points from the constructor but for now its required or the request will fail).
 
 *   **Payload:**
     ```json
     {
-      "username": "codewarsUsername"
+      "username": "codewarsUsername",
+      "points": 0
     }
     ```
 *   **Responses:**
