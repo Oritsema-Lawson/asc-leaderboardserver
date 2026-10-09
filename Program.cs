@@ -31,7 +31,7 @@ try
         x.Cookie.Name = "APCAuth";
         x.Cookie.HttpOnly = true;
         x.Cookie.SameSite = SameSiteMode.Strict;
-        x.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        x.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; //CookieSecurePolicy.Always before deploying!!
 
         x.Events.OnRedirectToLogin = y =>
         {

@@ -24,7 +24,10 @@ public class AuthController : ControllerBase
         var result = await _loginService.CheckLoginAsync(request.UserEmail, request.Password);
         
         if(result.res == LoginResult.IncorrectPassword || result.res == LoginResult.UnknownUser)
-            return Unauthorized();
+            return Unauthorized("Incorrect email or password.");
+
+        if(result.permissions == "UNSPECIFIED")
+            return Unauthorized("Account not yet active.");
 
         List<Claim> claims = new List<Claim>()
         {
@@ -36,7 +39,7 @@ public class AuthController : ControllerBase
         ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
-        return Ok();
+        return Ok("Login Successful");
     }
 
     [HttpPost("register")]
@@ -45,7 +48,7 @@ public class AuthController : ControllerBase
         var result = await _loginService.RegisterAsync(request.UserEmail, request.Password);
         
         if(result == LoginResult.UserExists)
-            return Conflict();
+            return Conflict("A user already exists with this email.");
 
         return Ok();
     }
@@ -55,6 +58,6 @@ public class AuthController : ControllerBase
     public async Task<ActionResult> LogOut()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return Ok();
+        return Ok("Logout Successful.");
     }
 }
